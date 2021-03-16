@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include "sha1.h"
 #include "string.h"
@@ -10,8 +10,8 @@
 class Chat {
     public:
         Chat();
-        void reg(char _login[LOGINLENGTH], char _pass[], int pass_length);
-        bool login(char _login[LOGINLENGTH], char _pass[], int pass_length);
+        void reg(userName _login, char _pass[], int pass_len);
+        bool login(userName _login, char _pass[], int pass_len);
 
     private:
         HashTable data;

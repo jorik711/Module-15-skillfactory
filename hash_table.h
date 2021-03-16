@@ -1,6 +1,7 @@
-#pragma once
+﻿#pragma once
 
 #include <string.h>
+#include "sha1.h"
 
 #define NAMELENGTH 10  // Зафикcируем длину имени
 
@@ -11,9 +12,9 @@ class HashTable { // хэш таблица
     
         HashTable();
         ~HashTable();
-        void add(userName user_name, int hash);  
+        void add(userName user_name, uint *hash);
         void del(userName user_name);
-        int find(userName user_name);               
+        uint* find(userName user_name);
          
     private:
     
@@ -27,10 +28,10 @@ class HashTable { // хэш таблица
             
             Pair(): 
                 user_name(""), 
-                hash_pass(-1),
+                hash_pass(0),
                 status(enPairStatus::free)
             {}
-            Pair(userName u_name, int hash): 
+            Pair(userName u_name, uint *hash):
                 hash_pass(hash),
                 status(enPairStatus::engaged) {
                 memcpy(user_name, u_name, NAMELENGTH);
@@ -50,7 +51,7 @@ class HashTable { // хэш таблица
             
             
             userName user_name;
-            int hash_pass;
+            uint* hash_pass;
             
             enPairStatus status;
         };

@@ -1,23 +1,28 @@
-#include "chat.h"
+﻿#include "chat.h"
 #include "iostream"
 #include "string.h"
+#include "hash_table.h"
 
-Chat::Chat() {
-    data_count = 0;
-}
-void Chat::reg(char _login[LOGINLENGTH], char _pass[], int pass_length) {
+Chat::Chat() {}
 
-    uint* a = sha1(_pass, sizeof(_pass[0]) - 1 );
-    data[data_count++] = AuthData(_login, a);
+void Chat::reg(userName _login, char _pass[], int pass_len) {
+    uint* new_hash = sha1(_pass, pass_len ); // вычисляем хэш пароля
+    data.add(_login, new_hash); // записываем пару в хэш таблицу
+    std::cout << "Registration successfull" << std::endl;
 }
-bool Chat::login(char _login[LOGINLENGTH], char _pass[], int pass_length) {
-    for (int i =0; i < SIZE; i++) {
-        if(strcmp( data[i].login, _login ) == 0) {
-            uint* a = sha1(_pass, sizeof(_pass[0]) - 1);
-            if (a == data[i].pass_sha1_hash) {
-                return true;
-            }
-        }
+bool Chat::login(userName _login, char _pass[],int pass_len) {
+
+    uint* new_hash = sha1(_pass, pass_len); // вычисляем хэш пароля
+    uint* loghash = data.find(_login);
+    if (!loghash) {
+        std::cout << "Login not found" << std::endl;
+        return false;
     }
+    if (*loghash == *new_hash) {
+        std::cout << "Login!" << std::endl;
+        return true;
+    } 
+
+    std::cout << "Invalid password" << std::endl;
     return false;
 }

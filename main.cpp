@@ -1,80 +1,38 @@
-﻿/*
-Напишите базовый класс Device, который будет описывать портативные устройства. 
-Для этого класса создайте закрытый целочисленный член _batteryLife, 
-который будет описывать время работы аккумулятора устройства, а также функцию ShowSpec(),
-которая выводит, сколько времени может работать девайс. Создайте дочерний класс Player,
-добавьте в него целочисленный закрытый член _totalTracks и функцию ShowTotalTracks(),
-которая показывает, сколько треков можно записать в плеер.
-
-Перепишите базовые классы Device и Player так,
-чтобы класс Player переопределял функцию ShowSpec,
-и выводил на консоль сообщение с информацией о времени работы
-аккумулятора и количество треков, которое можно хранить в плеере.
-
-Создайте абстрактный класс IElectronics, 
-в котором будет чистая виртуальная функция void ShowSpec.
-Дополните ваш магазин электроники и создайте дополнительный класс Appliances(бытовая техника),
-который будет содержать целочисленную характеристику weight — вес бытовой техники.
-Перепишите классы Appliances(бытовая техника) и Device так, чтобы они наследовались от IElectronics.
-*/
-
+﻿
+/**
+ * ЗАДАЧА: Модернизируйте модель чата из задания 15.4.2 так,
+ * чтобы логин и хеш от пароля теперь хранились в хеш-таблице.
+ * То есть логин является ключом, хеш — значением, а вместе они составляются пару.
+ * Хеш-функцию для хеш-таблицы составьте методом умножения.
+ * Хеш-таблицу реализуйте методом квадратичного пробирования.
+**/
+#include "sha1.h"
+#include "string.h"
+#include "chat.h"
 #include <iostream>
-#include <stdlib.h>
 
-using namespace std;
+int main() {
+    Chat chat;
+    std::cout << " * Registration * " << std::endl;
+    std::cout << "Username: ";
+    userName user;
+    std::cin >> user;
+    std::cout << "Password: ";
+    char pass[10];
+    std::cin >> pass;
+    int size = strlen(pass);
+    chat.reg(user,pass,size);
 
-class IElectronics
-{
-public:
-	virtual void ShowSpec() = 0;
-	virtual ~IElectronics() = default;
-};
+    std::cout << "-----------------------------------------" << std::endl;
 
-class Appliances : public IElectronics
-{
-private:
-	float _weight;
-public:
-	Appliances(float weight) : _weight(weight) {}
-	void ShowSpec() override
-	{
-		cout << "Weight appliances: " << _weight << endl;
-	}
-};
-class Device : public IElectronics
-{
-protected:
-	int _batteryLife;
-public:
-	Device(int batteryLife) : _batteryLife(batteryLife) {}
-	virtual void ShowSpec() override
-	{
-		cout << "Time work device: " << endl;
-	}
-
-};
-class Player : public Device
-{
-private:
-	int _totalTrack;
-public:
-	Player(int batteryLife, int totalTrack) : Device(batteryLife), _totalTrack(totalTrack)
-	{
-
-	}
-	void ShowTotalTrack()
-	{
-		cout << "Total track in device: " << endl;
-	}
-	void ShowSpec()
-	{
-		cout << "Time work device: " << _batteryLife << "Total track in device: " << _totalTrack << endl;
-	}
-};
-
-
-int main()
-{
-
-
+    std::cout << " * Login * : " << std::endl;
+    std::cout << "Username: ";
+    userName user2;
+    std::cin >> user2;
+    std::cout << "Password: ";
+    char pass2[10];
+    std::cin >> pass2;
+    int size2 = strlen(pass2);
+    chat.login(user2,pass2,size2);
+    return 0;
 }
